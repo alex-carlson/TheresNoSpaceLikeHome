@@ -7,7 +7,6 @@ public class LevelGenerator : MonoBehaviour
     public float Size = 10;
     public float PlanetDistance = 1;
     public List<GameObject> PlanetSprites;
-    public float playerCount = 4;
     public Transform NextPlayerSpawnPoint;
 
     private List<Planet> Planets;
