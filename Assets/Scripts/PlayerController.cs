@@ -7,45 +7,58 @@ using Photon.Realtime;
 public class PlayerController : MonoBehaviour
 {
     public float jumpForce = 10;
+    public float moveSpeed = 5;
     
     private PhotonView photonView;
     private Camera _cam;
+    private Vector2 _direction;
 
     private void Start()
     {
         photonView = GetComponent<PhotonView>();
         _cam = GetComponentInChildren<Camera>();
-    }
 
-    private void Awake()
-    {
         if(!photonView.IsMine && PhotonNetwork.IsConnected){
             _cam.enabled = false;
         }
+
+        SetSpawnPosition();
     }
 
-   private  void Update()
+    private void SetSpawnPosition(){
+        LevelGenerator lg = FindObjectOfType<LevelGenerator>();
+
+        transform.position = lg.NextPlayerSpawnPoint.position;
+        lg.MoveSpawn();
+    }
+
+    private void Update()
     {
-        if (photonView.IsMine == false && PhotonNetwork.IsConnected == true){  return; }
-
-        if(Input.GetKeyDown(KeyCode.Space)){
-            Jump(jumpForce);
-        }
+        CheckPlayer();
+        transform.Translate((_direction * moveSpeed) * Time.deltaTime, Space.Self);
     }
 
-    private void LateUpdate()
-    {
-        float x = Input.GetAxis("Horizontal");
-        Vector3 mov = transform.right * x;
-
-        Move(mov);
+    public void MoveLeft(){
+        CheckPlayer();
+        _direction = -Vector2.right;
     }
 
-    public void Move(Vector3 movement){
-        transform.Translate(movement);
+    public void MoveRight(){
+        CheckPlayer();
+        _direction = Vector2.right;
     }
 
-    public void Jump(float force){
-        GetComponent<Rigidbody2D>().AddForce(transform.up * force, ForceMode2D.Impulse);
+    public void ClearMovement(){
+        CheckPlayer();
+        _direction = Vector2.zero;
+    }
+
+    public void Jump(){
+        CheckPlayer();
+        //GetComponent<Rigidbody2D>().AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+    }
+
+    private void CheckPlayer(){
+         if (photonView.IsMine == false && PhotonNetwork.IsConnected == true){  return; }
     }
 }
