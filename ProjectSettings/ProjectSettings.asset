@@ -611,10 +611,10 @@ PlayerSettings:
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
   apiCompatibilityLevel: 6
-  cloudProjectId: 
+  cloudProjectId: 57ee9aed-a97e-4ba6-abe6-d12371e8f70a
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: TheresNoSpaceLikeHome
+  organizationId: alex-carlson-1367650
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

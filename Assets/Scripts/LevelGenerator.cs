@@ -13,6 +13,10 @@ public class LevelGenerator : MonoBehaviour
     private void Start(){
         // create a starting point for each player that we have
         SpawnMap();
+
+        for(int i = 0; i < playerCount; i++){
+            SpawnPoint(i);
+        }
     }
 
     private void SpawnMap(){
@@ -29,7 +33,7 @@ public class LevelGenerator : MonoBehaviour
 
     private void SpawnPoint(int playerIndex){
         // create starting planet
-        Vector2 StartPoint = RandomVector(Size);
+        Vector2 StartPoint = RandomVector(Size * 2);
 
         Instantiate(PlayerSpawnGO,StartPoint, Quaternion.Euler(Vector3.zero));
     }
@@ -43,4 +47,11 @@ public class LevelGenerator : MonoBehaviour
     private void SetRandomColor(GameObject go){
         go.GetComponent<SpriteRenderer>().color =  Random.ColorHSV(0f, 1f, 0.6f, 0.8f, 0.5f, 0.8f);
     }
+}
+
+[System.Serializable]
+public class Planet {
+    public float x;
+    public float y;
+    public int spriteIndex;
 }
