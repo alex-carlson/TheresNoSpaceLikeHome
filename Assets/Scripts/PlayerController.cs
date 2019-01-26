@@ -1,14 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class PlayerController : MonoBehaviour
 {
     public float jumpForce = 10;
+    
+    private PhotonView photonView;
+    private Camera _cam;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
+        photonView = GetComponent<PhotonView>();
+        _cam = GetComponentInChildren<Camera>();
+    }
+
+    private void Awake()
+    {
+        if(!photonView.IsMine && PhotonNetwork.IsConnected){
+            _cam.enabled = false;
+        }
+    }
+
+   private  void Update()
+    {
+        if (photonView.IsMine == false && PhotonNetwork.IsConnected == true){  return; }
+
         if(Input.GetKeyDown(KeyCode.Space)){
             Jump(jumpForce);
         }
