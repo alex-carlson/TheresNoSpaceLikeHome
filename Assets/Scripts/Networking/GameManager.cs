@@ -4,11 +4,13 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
 
     public GameObject playerPrefab;
+    public GameEvent Event;
 
     [HideInInspector]
     public PlayerController LocalPlayer;
@@ -54,12 +56,17 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         Debug.LogFormat("OnPlayerEnteredRoom() {0}", other.NickName); // not seen if you're the player connecting
         base.OnPlayerEnteredRoom(other);
+        Event.Raise();
 
         //PlayerController.RefreshInstance(ref LocalPlayer, playerPrefab);
 
         if (PhotonNetwork.IsMasterClient)
         {
             Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
+            Hashtable hash = new Hashtable();
+            hash.Add("Seed", Mathf.RoundToInt(Random.value * 100000));
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+            FindObjectOfType<LevelGenerator>().InitSeed((int)PhotonNetwork.LocalPlayer.CustomProperties["Seed"]);
             //LoadArena();
         }
     }

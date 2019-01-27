@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+using Photon.Pun;
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -9,13 +11,13 @@ public class LevelGenerator : MonoBehaviour
     public float displacement = 5;
     public List<GameObject> PlanetSprites;
     public Transform NextPlayerSpawnPoint;
-    public int seed = 0;
+    public int seed;
 
     private List<Planet> Planets;
 
-    private void Start(){
+    public void InitSeed(int syncedSeed){
+        seed = syncedSeed;
         Random.InitState(seed);
-        // create a starting point for each player that we have
         SpawnMap();
     }
 

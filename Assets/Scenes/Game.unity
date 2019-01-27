@@ -1094,7 +1094,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Size: 25
-  PlanetDistance: 20
+  PlanetDistance: 30
   displacement: 25
   PlanetSprites:
   - {fileID: 5134733447465983839, guid: f81db82ca5e610c4ab4cb653c9dc7010, type: 3}
@@ -1548,5 +1548,11 @@ PrefabInstance:
       propertyPath: playerPrefab
       value: 
       objectReference: {fileID: 2, guid: 0a9a87022d056b8449805a80b6701687, type: 3}
+    - target: {fileID: 245248606964659353, guid: df1f415c26f3ca345ac266c65c4b126a,
+        type: 3}
+      propertyPath: Event
+      value: 
+      objectReference: {fileID: 11400000, guid: 0adbb67d8935d144587a4e0db2bb1d45,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df1f415c26f3ca345ac266c65c4b126a, type: 3}

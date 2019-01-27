@@ -43,7 +43,6 @@ public class PlayerController : MonoBehaviourPun
 
     private void SetSpawnPosition(){
         LevelGenerator lg = FindObjectOfType<LevelGenerator>();
-
         transform.position = lg.NextPlayerSpawnPoint.position;
         lg.MoveSpawn();
     }
