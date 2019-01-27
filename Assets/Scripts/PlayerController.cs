@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviourPun
     }
 
     public void MoveLeft(){
-        CheckPlayer();
+        if(!photonView.IsMine) return;
         _direction = -Vector2.right;
         anim.SetFloat("moveSpeed", 1);
         sprite.flipX = false;
@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviourPun
     }
 
     public void MoveRight(){
-        CheckPlayer();
+        if (!photonView.IsMine) return;
         _direction = Vector2.right;
         anim.SetFloat("moveSpeed", 1);
         sprite.flipX = true;
@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviourPun
     }
 
     public void ClearMovement(){
-        CheckPlayer();
+        if (!photonView.IsMine) return;
         _direction = Vector2.zero;
         currentUpwardForce = 0;
         anim.SetFloat("moveSpeed", 0);
@@ -119,8 +119,7 @@ public class PlayerController : MonoBehaviourPun
     }
 
     public void Jump(){
-        CheckPlayer();
-        if(!photonView.IsMine) return;
+        if (!photonView.IsMine) return;
         float dist = Vector3.Distance(this.transform.position, this.pullTarget.position);
 
         if(dist < planetDiameter)
