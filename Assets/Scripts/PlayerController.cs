@@ -8,14 +8,14 @@ public class PlayerController : MonoBehaviourPun
 {
     [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
     public static GameObject LocalPlayerInstance;
-    public float jumpForce = 10;
-    public float moveSpeed = 5;
+    public float jumpForce = 50;
+    public float moveSpeed = 15;
     public bool isGrounded = false;
     public Transform pullTarget = null;
-    public float maxGravDist = 4f;
-    public float maxGravity = 35f;
-    public float planetDiameter;
-    public float JumpAnimTimeOffset = 1;
+    public float maxGravDist = 100f;
+    public float maxGravity = 80f;
+    public float planetDiameter = 10;
+    public float JumpAnimTimeOffset = 0.5f;
     public AudioClip[] footsteps;
     public AudioClip jumpSound;
     
