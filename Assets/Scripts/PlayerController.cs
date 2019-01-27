@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviourPun
     }
 
     private void CheckPlayer(){
-         if (photonView.IsMine == false && PhotonNetwork.IsConnected == true){  return; }
+         if (!photonView.IsMine){ return; }
     }
 
     private Transform GetClosestPlanet(){
