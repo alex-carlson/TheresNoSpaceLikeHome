@@ -37,7 +37,7 @@ public class LevelGenerator : MonoBehaviour
         }
 
         for(int i = 0; i < SpecialPlanets.Count; i++){
-            Vector2 r = RandomVector(Size * 2);
+            Vector2 r = RandomVector(Size * 30);
 
            GameObject planet = Instantiate(SpecialPlanets[i], r, Quaternion.identity);
            planet.name = "Special Planet";
