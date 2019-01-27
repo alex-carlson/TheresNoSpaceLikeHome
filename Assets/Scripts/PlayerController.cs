@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(){
         CheckPlayer();
-        //GetComponent<Rigidbody2D>().AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+        GetComponent<Rigidbody2D>().AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
 
     private void CheckPlayer(){
