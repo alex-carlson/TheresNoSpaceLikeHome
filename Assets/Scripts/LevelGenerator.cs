@@ -1,20 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+using Photon.Pun;
+using UnityEngine.UI;
 
 public class LevelGenerator : MonoBehaviour
 {
     public float Size = 10;
     public float PlanetDistance = 1;
+    public float displacement = 5;
     public List<GameObject> PlanetSprites;
     public Transform NextPlayerSpawnPoint;
+    public int realSeed = 0;
+    public GameManager GameManager;
+    public Text seedText;
 
     private List<Planet> Planets;
-
-    private void Start(){
-        // create a starting point for each player that we have
-        SpawnMap();
-    }
 
     private void SpawnMap(){
         Planets = new List<Planet>();
@@ -28,7 +30,7 @@ public class LevelGenerator : MonoBehaviour
                  p.y = pos.y;
                  p.spriteIndex = r;
                  Planets.Add(p);
-                 GameObject planet = Instantiate(PlanetSprites[r], pos + RandomVector(3f), Quaternion.Euler(Vector3.zero));
+                 GameObject planet = Instantiate(PlanetSprites[r], pos + RandomVector(displacement), Quaternion.Euler(Vector3.zero));
                  planet.transform.SetParent(this.transform);
             }
         }
@@ -42,6 +44,15 @@ public class LevelGenerator : MonoBehaviour
         Vector2 v =  new Vector2(Random.value * scale, Random.value * scale);
 
         return v;
+    }
+
+    [PunRPC]
+    void RecieveSeed(int s){
+        realSeed = s;
+        Debug.Log("Got seed from manager, it's: " + s);
+        seedText.text = "seed: " + realSeed;
+        Random.InitState(realSeed);
+        SpawnMap();
     }
 }
 

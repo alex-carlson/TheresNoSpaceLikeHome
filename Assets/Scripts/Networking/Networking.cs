@@ -10,13 +10,16 @@ public class Networking : MonoBehaviourPunCallbacks
     public string gameVersion = "1";
     public Text progressLabel;
 
+    private bool isConnecting;
+
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     public void Connect(){
-        progressLabel.text = "Connecting...";
+        isConnecting = true;
+        SetLabel("Connecting...");
         if(PhotonNetwork.IsConnected){
             PhotonNetwork.JoinRandomRoom();
         } else {
@@ -26,28 +29,33 @@ public class Networking : MonoBehaviourPunCallbacks
     }
 
     public override void OnConnectedToMaster(){
-        Debug.Log("PUN Basics Tutorial/Launcher: OnConnectedToMaster() was called by PUN");
+        SetLabel("Connected to Server");
+        base.OnConnectedToMaster();
         PhotonNetwork.JoinRandomRoom();
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
+        base.OnJoinRandomFailed(returnCode, message);
         Debug.Log("PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
+        SetLabel("No room available, creating one.");
         // progressLabel.text = "Failed to join existing room, starting a new game";
         // #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
         PhotonNetwork.CreateRoom(null, new RoomOptions());
     }
 
-
-    public override void OnJoinedRoom(){
-        progressLabel.text = "Connected!";
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
-        {
-            PhotonNetwork.LoadLevel("Game");
-        }
+    public override void OnDisconnected(DisconnectCause cause){
+        base.OnDisconnected(cause);
     }
 
-    public void OnDisconnected(DisconnectCause cause){
-        Debug.LogWarningFormat("PUN Basics Tutorial/Launcher: OnDisconnected() was called by PUN with reason {0}", cause);
+    public override void OnJoinedRoom(){
+        base.OnJoinedRoom();
+        SetLabel("Connected!");
+        PhotonNetwork.LoadLevel("Game");
+    }
+
+    private void SetLabel(string s)
+    {
+        progressLabel.text = s;
     }
 }
