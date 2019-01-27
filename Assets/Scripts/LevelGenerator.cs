@@ -10,7 +10,8 @@ public class LevelGenerator : MonoBehaviour
     public float Size = 10;
     public float PlanetDistance = 1;
     public float displacement = 5;
-    public List<GameObject> PlanetSprites;
+    public List<GameObject> SpecialPlanets;
+    public List<GameObject> NormalPlanets;
     public Transform NextPlayerSpawnPoint;
     public int realSeed = 0;
     public GameManager GameManager;
@@ -23,16 +24,24 @@ public class LevelGenerator : MonoBehaviour
         
         for(int i = 0; i < Size; i ++){
             for(int j = 0; j < Size; j++){
-                 int r = Mathf.FloorToInt(Random.value * PlanetSprites.Count);
+                 int r = Mathf.FloorToInt(Random.value * NormalPlanets.Count);
                  Vector2 pos = new Vector2(i * PlanetDistance, j * PlanetDistance);
                  Planet p = new Planet();
                  p.x = pos.x;
                  p.y = pos.y;
                  p.spriteIndex = r;
                  Planets.Add(p);
-                 GameObject planet = Instantiate(PlanetSprites[r], pos + RandomVector(displacement), Quaternion.Euler(Vector3.zero));
+                 GameObject planet = Instantiate(NormalPlanets[r], pos + RandomVector(displacement), Quaternion.Euler(Vector3.zero));
                  planet.transform.SetParent(this.transform);
             }
+        }
+
+        for(int i = 0; i < SpecialPlanets.Count; i++){
+            Vector2 r = RandomVector(Size * 2);
+
+           GameObject planet = Instantiate(SpecialPlanets[i], r, Quaternion.identity);
+           planet.name = "Special Planet";
+           planet.transform.SetParent(this.transform);
         }
     }
 
@@ -49,7 +58,6 @@ public class LevelGenerator : MonoBehaviour
     [PunRPC]
     void RecieveSeed(int s){
         realSeed = s;
-        Debug.Log("Got seed from manager, it's: " + s);
         seedText.text = "seed: " + realSeed;
         Random.InitState(realSeed);
         SpawnMap();

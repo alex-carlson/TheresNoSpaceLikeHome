@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviourPun
     public float maxGravity = 35f;
     public float planetDiameter;
     public float JumpAnimTimeOffset = 1;
+    public AudioClip[] footsteps;
+    public AudioClip jumpSound;
     
     private Vector2 _direction;
     private GameObject[] planets;
@@ -25,6 +27,8 @@ public class PlayerController : MonoBehaviourPun
     private bool active = false;
     private Animator anim;
     private SpriteRenderer sprite;
+    private AudioSource audio;
+    private ParticleSystem particles;
 
     private void Start()
     {
@@ -43,6 +47,8 @@ public class PlayerController : MonoBehaviourPun
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
+        audio = GetComponent<AudioSource>();
+        particles = GetComponentInChildren<ParticleSystem>();
 
         SetSpawnPosition();
 
@@ -91,6 +97,7 @@ public class PlayerController : MonoBehaviourPun
         _direction = -Vector2.right;
         anim.SetFloat("moveSpeed", 1);
         sprite.flipX = false;
+        InvokeRepeating("Step", 0, 0.25f);
     }
 
     public void MoveRight(){
@@ -98,6 +105,8 @@ public class PlayerController : MonoBehaviourPun
         _direction = Vector2.right;
         anim.SetFloat("moveSpeed", 1);
         sprite.flipX = true;
+        particles.emissionRate = 5;
+        InvokeRepeating("Step", 0, 0.25f);
     }
 
     public void ClearMovement(){
@@ -106,6 +115,8 @@ public class PlayerController : MonoBehaviourPun
         currentUpwardForce = 0;
         anim.SetFloat("moveSpeed", 0);
         anim.SetBool("jumping", false);
+        particles.emissionRate = 0;
+        CancelInvoke("Step");
     }
 
     public void Jump(){
@@ -115,14 +126,22 @@ public class PlayerController : MonoBehaviourPun
     }
 
     private void PushOff(){
+        particles.emissionRate = 50;
         float dist = Vector3.Distance(transform.position, pullTarget.position);
 
-        if (dist < planetDiameter)
+        if (dist < planetDiameter){
             rb.AddForce((transform.up * jumpForce), ForceMode2D.Impulse);
+            audio.PlayOneShot(jumpSound);
+        }
     }
 
     private void CheckPlayer(){
          if (!photonView.IsMine){ return; }
+    }
+
+    void Step(){
+        int r = Mathf.RoundToInt(footsteps.Length - 1);
+        audio.PlayOneShot(footsteps[r]);
     }
 
     private Transform GetClosestPlanet(){
