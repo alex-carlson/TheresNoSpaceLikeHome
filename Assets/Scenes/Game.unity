@@ -420,7 +420,14 @@ MonoBehaviour:
   PlanetDistance: 20
   displacement: 25
   PlanetSprites:
-  - {fileID: 1236771578437910131, guid: 5f19948665b755a4488b5d69f6bbcfd9, type: 3}
+  - {fileID: 5134733447465983839, guid: f81db82ca5e610c4ab4cb653c9dc7010, type: 3}
+  - {fileID: 1859792329701641701, guid: 306227cd19120f849944ab85bc50dd4c, type: 3}
+  - {fileID: 5134733447465983839, guid: f81db82ca5e610c4ab4cb653c9dc7010, type: 3}
+  - {fileID: 1859792329701641701, guid: 306227cd19120f849944ab85bc50dd4c, type: 3}
+  - {fileID: 5134733447465983839, guid: f81db82ca5e610c4ab4cb653c9dc7010, type: 3}
+  - {fileID: 1859792329701641701, guid: 306227cd19120f849944ab85bc50dd4c, type: 3}
+  - {fileID: 3101442770178665235, guid: 888038ad5af50e146a16242428d2d61a, type: 3}
+  - {fileID: 237225890900993449, guid: 2aadc14788cabf64cb4fe52a0711ecd7, type: 3}
   NextPlayerSpawnPoint: {fileID: 397823290}
 --- !u!114 &1293252907
 MonoBehaviour:

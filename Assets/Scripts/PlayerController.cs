@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviourPun
     private GameObject[] planets;
     private Rigidbody2D rb;
     private Camera _cam;
+    private float currentUpwardForce = 0;
 
     private void Start()
     {
@@ -51,6 +52,7 @@ public class PlayerController : MonoBehaviourPun
     {
         CheckPlayer();
         transform.Translate((_direction * moveSpeed) * Time.deltaTime, Space.Self);
+        rb.AddForce(((-transform.right * currentUpwardForce) * jumpForce) * Time.deltaTime);
         pullTarget = GetClosestPlanet();
     }
 
@@ -83,11 +85,12 @@ public class PlayerController : MonoBehaviourPun
     public void ClearMovement(){
         CheckPlayer();
         _direction = Vector2.zero;
+        currentUpwardForce = 0;
     }
 
     public void Jump(){
         CheckPlayer();
-        GetComponent<Rigidbody2D>().AddForce(-transform.right * jumpForce, ForceMode2D.Impulse);
+        currentUpwardForce = 1;
     }
 
     private void CheckPlayer(){

@@ -459,7 +459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b65d1892c7c55a4fb94449eeb4ab386, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 15
+  jumpForce: 5000
   moveSpeed: 15
   isGrounded: 0
   pullTarget: {fileID: 0}
