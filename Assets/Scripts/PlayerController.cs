@@ -120,7 +120,8 @@ public class PlayerController : MonoBehaviourPun
 
     public void Jump(){
         CheckPlayer();
-        float dist = Vector3.Distance(transform.position, pullTarget.position);
+        if(!photonView.IsMine) return;
+        float dist = Vector3.Distance(this.transform.position, this.pullTarget.position);
 
         if(dist < planetDiameter)
         {
