@@ -57,7 +57,6 @@ public class PlayerController : MonoBehaviourPun
 
     private void SetSpawnPosition(){
         LevelGenerator lg = FindObjectOfType<LevelGenerator>();
-        Debug.Log("Moving to : " + lg.NextPlayerSpawnPoint.position);
         transform.position = lg.NextPlayerSpawnPoint.position;
         lg.MoveSpawn();
     }
@@ -121,12 +120,20 @@ public class PlayerController : MonoBehaviourPun
 
     public void Jump(){
         CheckPlayer();
-        anim.SetBool("jumping", true);
+        float dist = Vector3.Distance(transform.position, pullTarget.position);
+
+        if(dist < planetDiameter)
+        {
+            anim.SetBool("jumping", true);
+        }
+
         Invoke("PushOff", JumpAnimTimeOffset);
     }
 
     private void PushOff(){
         particles.emissionRate = 50;
+        anim.SetBool("jumping", false);
+
         float dist = Vector3.Distance(transform.position, pullTarget.position);
 
         if (dist < planetDiameter){

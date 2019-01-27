@@ -46,7 +46,7 @@ public class LevelGenerator : MonoBehaviour
     }
 
     public void MoveSpawn(){
-        NextPlayerSpawnPoint.position = RandomVector(Size * 2);
+        NextPlayerSpawnPoint.position = RandomVector(Size * 30);
     }
 
     private Vector2 RandomVector(float scale){
