@@ -11,8 +11,8 @@ public class Hover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 v = direction * (Mathf.Cos(Time.time * speedScale + Random.value) );
+        Vector3 v = direction * (Mathf.Cos(Time.time * speedScale) );
 
-        transform.position = transform.position + (v * (distanceScale * Time.deltaTime));
+        transform.position = transform.position + (v * ((distanceScale + Random.value) * Time.deltaTime));
     }
 }

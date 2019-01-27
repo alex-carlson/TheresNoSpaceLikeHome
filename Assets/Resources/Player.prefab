@@ -128,12 +128,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b65d1892c7c55a4fb94449eeb4ab386, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 5000
+  jumpForce: 75
   moveSpeed: 15
   isGrounded: 0
   pullTarget: {fileID: 0}
   maxGravDist: 100
   maxGravity: 80
+  planetDiameter: 10
 --- !u!114 &176437187139697921
 MonoBehaviour:
   m_ObjectHideFlags: 0

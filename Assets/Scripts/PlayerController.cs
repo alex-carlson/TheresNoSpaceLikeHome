@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviourPun
     public Transform pullTarget = null;
     public float maxGravDist = 4f;
     public float maxGravity = 35f;
+    public float planetDiameter;
     
     private Vector2 _direction;
     private GameObject[] planets;
@@ -59,7 +60,6 @@ public class PlayerController : MonoBehaviourPun
         if(!active) return;
         CheckPlayer();
         transform.Translate((_direction * moveSpeed) * Time.deltaTime, Space.Self);
-        rb.AddForce(((-transform.right * currentUpwardForce) * jumpForce) * Time.deltaTime);
         pullTarget = GetClosestPlanet();
     }
 
@@ -98,7 +98,10 @@ public class PlayerController : MonoBehaviourPun
 
     public void Jump(){
         CheckPlayer();
-        currentUpwardForce = 1;
+        float dist = Vector3.Distance(transform.position, pullTarget.position);
+        
+        if(dist < planetDiameter)
+            rb.AddForce((-transform.right * jumpForce), ForceMode2D.Impulse);
     }
 
     private void CheckPlayer(){
