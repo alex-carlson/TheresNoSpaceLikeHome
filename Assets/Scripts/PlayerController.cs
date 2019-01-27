@@ -15,20 +15,16 @@ public class PlayerController : MonoBehaviourPun
     public float maxGravDist = 4f;
     public float maxGravity = 35f;
     
-    private Camera _cam;
     private Vector2 _direction;
     private GameObject[] planets;
     private Rigidbody2D rb;
+    private Camera _cam;
 
     private void Start()
     {
 
-        if(photonView.IsMine && PhotonNetwork.IsConnected){
+        if(photonView.IsMine){
             FindObjectOfType<Camera>().GetComponent<FollowPlayer>().SetTarget(this.transform);
-        }
-
-        if (photonView.IsMine)
-        {
             PlayerController.LocalPlayerInstance = this.gameObject;
         } else {
             this.enabled = false;
@@ -38,6 +34,7 @@ public class PlayerController : MonoBehaviourPun
         DontDestroyOnLoad(this.gameObject);
 
         planets = GameObject.FindGameObjectsWithTag("Planet");
+        _cam = GameObject.FindObjectOfType<Camera>();
         rb = GetComponent<Rigidbody2D>();
 
         SetSpawnPosition();
@@ -113,17 +110,5 @@ public class PlayerController : MonoBehaviourPun
         }
 
         return tMin;
-    }
-
-    public static void RefreshInstance(ref PlayerController player, GameObject prefab){
-        var position = Vector3.zero;
-        var rotation = Quaternion.identity;
-        if(player != null){
-            position = player.transform.position;
-            rotation = player.transform.rotation;
-            PhotonNetwork.Destroy(player.gameObject);
-        }
-
-        player = PhotonNetwork.Instantiate(prefab.gameObject.name, position, rotation).GetComponent<PlayerController>();
     }
 }

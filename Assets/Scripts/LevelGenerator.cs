@@ -6,6 +6,7 @@ public class LevelGenerator : MonoBehaviour
 {
     public float Size = 10;
     public float PlanetDistance = 1;
+    public float displacement = 5;
     public List<GameObject> PlanetSprites;
     public Transform NextPlayerSpawnPoint;
 
@@ -28,7 +29,7 @@ public class LevelGenerator : MonoBehaviour
                  p.y = pos.y;
                  p.spriteIndex = r;
                  Planets.Add(p);
-                 GameObject planet = Instantiate(PlanetSprites[r], pos + RandomVector(3f), Quaternion.Euler(Vector3.zero));
+                 GameObject planet = Instantiate(PlanetSprites[r], pos + RandomVector(displacement), Quaternion.Euler(Vector3.zero));
                  planet.transform.SetParent(this.transform);
             }
         }

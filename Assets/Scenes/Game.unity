@@ -418,6 +418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Size: 25
   PlanetDistance: 20
+  displacement: 25
   PlanetSprites:
   - {fileID: 1236771578437910131, guid: 5f19948665b755a4488b5d69f6bbcfd9, type: 3}
   NextPlayerSpawnPoint: {fileID: 397823290}
