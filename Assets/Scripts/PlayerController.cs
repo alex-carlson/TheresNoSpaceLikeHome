@@ -69,7 +69,8 @@ public class PlayerController : MonoBehaviourPun
 
         var dir = pullTarget.position - transform.position;
         var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        Quaternion q = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), (Time.fixedDeltaTime * 2));
+        transform.rotation = q;
     }
 
     public void MoveLeft(){
