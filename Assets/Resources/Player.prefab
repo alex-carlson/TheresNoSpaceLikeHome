@@ -4726,7 +4726,7 @@ GameObject:
   - component: {fileID: 4687083530972840175}
   - component: {fileID: 3965542145757993075}
   m_Layer: 0
-  m_Name: p1
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4772,6 +4772,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: da1c14f9274eeee45b8e07a4fcdf5e00, type: 3}
   - {fileID: 8300000, guid: 4d863bc8bbfde254fb42a11dcdbb5afa, type: 3}
   jumpSound: {fileID: 8300000, guid: a7f88c901699f294bab400e8ef0bede1, type: 3}
+  characterIndex: 0
+  characterAnimators:
+  - {fileID: 9100000, guid: 4633bcb4d309aed4ca25d72e921b7b0f, type: 2}
+  - {fileID: 9100000, guid: b091e6d5c07d578479985b0598cf4f92, type: 2}
+  - {fileID: 9100000, guid: 9ca559cbc63272741a179f0af0026709, type: 2}
+  - {fileID: 9100000, guid: 6e0c031b7441d434a81ae5023a2a4213, type: 2}
 --- !u!58 &6762212083570096917
 CircleCollider2D:
   m_ObjectHideFlags: 0

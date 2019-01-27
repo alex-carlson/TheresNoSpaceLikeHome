@@ -83,6 +83,12 @@ public class GameManager : MonoBehaviourPunCallbacks
             //LoadArena();
         }
 
+        PlayerController[] plrs = FindObjectsOfType<PlayerController>();
+
+        for(int i = 0; i < plrs.Length; i++){
+            plrs[i].SetCharacter(i);
+        }
+
         playerCount.text = "Players: " + PhotonNetwork.CurrentRoom.PlayerCount;
     }
 

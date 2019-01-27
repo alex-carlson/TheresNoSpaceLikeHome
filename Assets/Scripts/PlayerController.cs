@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviourPun
     public float JumpAnimTimeOffset = 0.5f;
     public AudioClip[] footsteps;
     public AudioClip jumpSound;
+    public int characterIndex = 0;
+    public RuntimeAnimatorController[] characterAnimators;
     
     private Vector2 _direction;
     private GameObject[] planets;
@@ -170,7 +172,12 @@ public class PlayerController : MonoBehaviourPun
                 minDist = dist;
             }
         }
-
         return tMin;
+    }
+
+    public void SetCharacter(int index){
+        characterIndex = index;
+        if(characterIndex > characterAnimators.Length) characterIndex = 0;
+        anim.runtimeAnimatorController = characterAnimators[characterIndex];
     }
 }
