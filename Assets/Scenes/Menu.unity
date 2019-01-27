@@ -780,7 +780,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -15, y: 0}
+  m_AnchoredPosition: {x: -15, y: -30}
   m_SizeDelta: {x: 300, y: 200}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1104481605
@@ -1686,6 +1686,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundIsOn: 1
   music: {fileID: 1323015623}
+  sprites:
+  - {fileID: 21300000, guid: 7a73514b770a48f4ebcc9a2444c9582b, type: 3}
+  - {fileID: 21300000, guid: 5afc46bd8f1ed7d4080e4c682857ae2a, type: 3}
 --- !u!1 &1763033148
 GameObject:
   m_ObjectHideFlags: 0

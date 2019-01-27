@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviourPun
     private SpriteRenderer sprite;
     private AudioSource audio;
     private ParticleSystem particles;
+    private int muted;
 
     private void Start()
     {
@@ -49,6 +50,7 @@ public class PlayerController : MonoBehaviourPun
         sprite = GetComponent<SpriteRenderer>();
         audio = GetComponent<AudioSource>();
         particles = GetComponentInChildren<ParticleSystem>();
+        muted = PlayerPrefs.GetInt("Mute");
 
         SetSpawnPosition();
 
@@ -96,7 +98,8 @@ public class PlayerController : MonoBehaviourPun
         _direction = -Vector2.right;
         anim.SetFloat("moveSpeed", 1);
         sprite.flipX = false;
-        InvokeRepeating("Step", 0, 0.25f);
+        if(muted == 0)
+            InvokeRepeating("Step", 0, 0.25f);
     }
 
     public void MoveRight(){
@@ -105,7 +108,8 @@ public class PlayerController : MonoBehaviourPun
         anim.SetFloat("moveSpeed", 1);
         sprite.flipX = true;
         particles.emissionRate = 5;
-        InvokeRepeating("Step", 0, 0.25f);
+        if (muted == 0)
+            InvokeRepeating("Step", 0, 0.25f);
     }
 
     public void ClearMovement(){
@@ -138,7 +142,8 @@ public class PlayerController : MonoBehaviourPun
 
         if (dist < planetDiameter){
             rb.AddForce((transform.up * jumpForce), ForceMode2D.Impulse);
-            audio.PlayOneShot(jumpSound);
+            if(muted == 0)
+                audio.PlayOneShot(jumpSound);
         }
     }
 
