@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Pun;
+using UnityEngine.UI;
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -11,15 +12,11 @@ public class LevelGenerator : MonoBehaviour
     public float displacement = 5;
     public List<GameObject> PlanetSprites;
     public Transform NextPlayerSpawnPoint;
-    public int seed;
+    public int realSeed = 0;
+    public GameManager GameManager;
+    public Text seedText;
 
     private List<Planet> Planets;
-
-    public void InitSeed(int syncedSeed){
-        seed = syncedSeed;
-        Random.InitState(seed);
-        SpawnMap();
-    }
 
     private void SpawnMap(){
         Planets = new List<Planet>();
@@ -47,6 +44,15 @@ public class LevelGenerator : MonoBehaviour
         Vector2 v =  new Vector2(Random.value * scale, Random.value * scale);
 
         return v;
+    }
+
+    [PunRPC]
+    void RecieveSeed(int s){
+        realSeed = s;
+        Debug.Log("Got seed from manager, it's: " + s);
+        seedText.text = "seed: " + realSeed;
+        Random.InitState(realSeed);
+        SpawnMap();
     }
 }
 

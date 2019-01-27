@@ -4,13 +4,18 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
 
     public GameObject playerPrefab;
     public GameEvent Event;
+    public Text playerCount;
+
+    public bool sentSeed;
+    public int seed;
+    public LevelGenerator LevelGenerator;
 
     [HideInInspector]
     public PlayerController LocalPlayer;
@@ -42,6 +47,18 @@ public class GameManager : MonoBehaviourPunCallbacks
         //PlayerController.RefreshInstance(ref LocalPlayer, playerPrefab);
     }
 
+    private void Update()
+    {
+        if(PhotonNetwork.InRoom && PhotonNetwork.IsMasterClient && !sentSeed){
+            sentSeed = true;
+            seed = Mathf.RoundToInt(Random.value * 100000);
+            LevelGenerator.realSeed = seed;
+            PhotonView pv = LevelGenerator.GetComponent<PhotonView>();
+            pv.RPC("RecieveSeed", RpcTarget.AllBuffered, seed);
+            playerCount.text = "Players: " + PhotonNetwork.CurrentRoom.PlayerCount;
+        }
+    }
+
     // void LoadArena()
     // {
     // if (!PhotonNetwork.IsMasterClient)
@@ -63,12 +80,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
-            Hashtable hash = new Hashtable();
-            hash.Add("Seed", Mathf.RoundToInt(Random.value * 100000));
-            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-            FindObjectOfType<LevelGenerator>().InitSeed((int)PhotonNetwork.LocalPlayer.CustomProperties["Seed"]);
             //LoadArena();
         }
+
+        playerCount.text = "Players: " + PhotonNetwork.CurrentRoom.PlayerCount;
     }
 
 
@@ -81,6 +96,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
         }
+        playerCount.text = "Players: " + PhotonNetwork.CurrentRoom.PlayerCount;
     }
 
     public override void OnLeftRoom(){

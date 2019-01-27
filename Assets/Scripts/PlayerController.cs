@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviourPun
     private Rigidbody2D rb;
     private Camera _cam;
     private float currentUpwardForce = 0;
+    private bool active = false;
 
     private void Start()
     {
@@ -34,11 +35,12 @@ public class PlayerController : MonoBehaviourPun
         // we flag as don't destroy on load so that instance survives level synchronization, thus giving a seamless experience when levels load.
         DontDestroyOnLoad(this.gameObject);
 
-        planets = GameObject.FindGameObjectsWithTag("Planet");
         _cam = GameObject.FindObjectOfType<Camera>();
         rb = GetComponent<Rigidbody2D>();
 
         SetSpawnPosition();
+
+        Invoke("Init", 1);
     }
 
     private void SetSpawnPosition(){
@@ -47,8 +49,14 @@ public class PlayerController : MonoBehaviourPun
         lg.MoveSpawn();
     }
 
+    public void Init(){
+        active = true;
+        planets = GameObject.FindGameObjectsWithTag("Planet");
+    }
+
     private void Update()
     {
+        if(!active) return;
         CheckPlayer();
         transform.Translate((_direction * moveSpeed) * Time.deltaTime, Space.Self);
         rb.AddForce(((-transform.right * currentUpwardForce) * jumpForce) * Time.deltaTime);
